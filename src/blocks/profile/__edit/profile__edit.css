@@ -1,0 +1,23 @@
+.profile__edit {
+    width: 24px;
+    height: 24px;
+    border: 1px solid #FFFFFF;
+    margin-left: 18px;
+    transition: opacity 0.5s ease;
+    background-color: transparent;
+    background-image: url(../../../images/Vectorpen.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.profile__edit:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}
+@media (max-width: 450px) {
+    .profile__edit {
+        margin:0 0 0 10px;
+        width: 18px;
+        height: 18px;
+        padding: 1px;
+    }
+}

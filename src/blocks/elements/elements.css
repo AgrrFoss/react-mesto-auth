@@ -1,0 +1,23 @@
+.elements {
+    max-width: 880px;
+    margin: 47px auto 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 32%));
+    grid-template-rows: minmax(50px, 370px);
+    grid-auto-rows: minmax(50px, 370px);
+    grid-gap: 20px 17px;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  @media (max-width: 700px) {
+    .elements {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 45%));
+  }
+  }
+  
+  @media (max-width: 400px) {
+    .elements {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 90%));
+  }
+  }

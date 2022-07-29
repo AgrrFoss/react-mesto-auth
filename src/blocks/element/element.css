@@ -1,0 +1,8 @@
+.element {
+    list-style: none;
+    border-radius: 10px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}

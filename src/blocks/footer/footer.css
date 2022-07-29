@@ -1,0 +1,20 @@
+.footer {
+    width: 100%;
+    max-width: 880px;
+    margin: 69px auto 60px;
+    flex-shrink: 0;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.2px;
+    color: #545454;
+}
+@media (max-width: 880px) {
+    .footer {
+        max-width: calc(100% - 40px);
+    }
+}
+@media (max-width: 450px) {
+    .footer {
+        font-size: 14px;
+    }
+}

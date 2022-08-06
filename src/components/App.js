@@ -10,13 +10,20 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import Login from './Login';
+import Register from './Register';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import ProtectedRoute from './ProtectedRoute';
+import InfoTooltip from './InfoTooltip';
 
 function App() {
+  const [isOpen1, setIsOpen1] = React.useState(true)
   const [isOpen, setIsOpen] = React.useState(false)
   const [isOpenEditProfile, setIsOpenEditProfile] = React.useState(false);
   const [isOpenEditAva, setIsOpenEditAva] = React.useState(false);
   const [isOpenAddPlace, setIsOpenAddPlace] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({name: '', link: ''});
+  const [loggedIn, setLoggedIn] = React.useState(false)
 
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([])
@@ -117,13 +124,26 @@ function App() {
         <div className="App">
           <div className="page">
             <Header />
-            <Main onEditProfile={handleEditProfileClick}
-            onAddPlace={handleAddPlaceClick}
-            onEditAvatar={handleEditAvatarClick} 
-            onCardClick={handleCardClick}
-            cards={cards} 
-            onLikeCard={handleCardLike}
-            onDeleteCard={handleCardDelete}/>
+            <Switch>   
+              <ProtectedRoute
+              path="/"
+              loggegIn={loggedIn}
+              component={Main}
+                onEditProfile={handleEditProfileClick}
+                onAddPlace={handleAddPlaceClick}
+                onEditAvatar={handleEditAvatarClick}
+                onCardClick={handleCardClick}
+                cards={cards}
+                onLikeCard={handleCardLike}
+                onDeleteCard={handleCardDelete}
+              />         
+              <Route path='/sing-in'>
+                <Login />
+              </Route>
+              <Route path='/sing-up'>
+                <Register />
+              </Route>
+            </Switch>
             <Footer />
             <EditProfilePopup isOpen={isOpenEditProfile} onClick={closeAllPopups} onUpdateUser={handleUpdateUser} />
             <EditAvatarPopup isOpen={isOpenEditAva} onClick={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
@@ -132,6 +152,7 @@ function App() {
             </PopupWithForm>
             <ImagePopup card={selectedCard} onClick={closeAllPopups}>
             </ImagePopup>
+            <InfoTooltip name="InfoTooltip" title="Вы успешно зарегистрировались!" isOpen={isOpen}></InfoTooltip>
           </div>
         </div>
     </CurrentUserContext.Provider>

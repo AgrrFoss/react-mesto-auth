@@ -1,0 +1,23 @@
+.auth-form__input {
+    font-family: inherit;
+    margin-top: 30px;
+    border: 2px solid #CCCCCC;
+    background-color: black;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.2px;
+    width: 358px;
+    padding-bottom: 13px;
+    box-sizing: border-box;
+  }
+  .auth-form__input_type_error {
+    border-bottom-color: red;
+  }
+  @media (max-width: 500px) {
+    .auth-form__input  {
+      width: 238px;
+    }
+  }

@@ -1,0 +1,16 @@
+.auth-form__text {
+    text-align: center;
+    margin: 15px 0 20px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.2;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+@media (max-width: 500px) {
+    .auth-form__text {
+        font-size: 18px;
+        margin: 0 0 45px;
+    }
+  }

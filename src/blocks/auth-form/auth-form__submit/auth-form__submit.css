@@ -1,0 +1,25 @@
+.auth-form__submit {
+    width: 358px;
+    height: 50px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.2px;
+    margin: 216px auto 0;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border-radius: 2px;
+    border: 0;
+    cursor: pointer;
+    transition: opacity 0.5s ease;
+}
+.auth-form__submit:hover {
+    opacity: 0.8;
+}
+@media (max-width: 500px) {
+    .auth-form__submit {
+        width: 238px;
+        height: 46px;
+        font-size: 14px;
+        margin: 45px 0 0;
+    }
+  }

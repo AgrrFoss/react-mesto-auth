@@ -1,17 +1,14 @@
-.popup__title {
-    margin: 0 0 24px;
+.auth-form__title {
+    text-align: center;
+    margin: 60px 0 20px;
     font-weight: 900;
     font-size: 24px;
     line-height: 1.2;
-    color: #000;
-}
-
-.popup__title_center {
-    text-align: center;
+    color: rgb(255, 255, 255);
 }
 
 @media (max-width: 500px) {
-    .popup__title {
+    .auth-form__title {
         font-size: 18px;
         margin: 0 0 45px;
     }

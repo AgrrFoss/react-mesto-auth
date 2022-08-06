@@ -1,0 +1,12 @@
+.header__text {
+    margin: 0 0 0 24px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.2;
+    color: rgb(255, 255, 255);
+    max-width: 80%;
+    text-decoration: none;
+}
+.header__text_gray {
+    color: #A9A9A9; 
+}

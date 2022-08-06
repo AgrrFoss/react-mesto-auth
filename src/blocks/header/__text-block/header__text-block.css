@@ -1,0 +1,4 @@
+.header__text-block {
+    display: flex;
+    justify-content: right;
+}

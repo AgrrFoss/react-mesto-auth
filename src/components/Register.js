@@ -1,10 +1,46 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
+import React, { Button } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import * as mestoAuth from '../mestoAuth'
 
-function Register() {
-  return (
-    <section className="auth">
-        <form className="auth-form">
+
+class Register extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: ''
+    }
+    console.log(this.state)
+    this.handleChange = this.handleChange.bind(this);
+    this.kandleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(e) {
+    const {name, value} = e.target;
+    console.log(name, value)
+    this.setState({
+      [name]: value 
+    });
+    console.log(this.state)
+  }
+
+    handleSubmit(e) {
+      e.preventDefault()
+      console.log (this.state)
+      const {email, password} = this.state;
+      console.log (email)
+      mestoAuth.register(email, password)
+      .then((res) => {
+        if(res){
+          this.props.history.push('/sing-in');
+        }
+      })
+    }
+
+    render () {
+      return (
+        <section className="auth">
+          <form className="auth-form" onSubmit={this.handleSubmit}>
             <h3 className="auth-form__title">Регистрация</h3>
             <input
                 type="email"
@@ -14,6 +50,8 @@ function Register() {
                 placeholder="email"
                 minLength="2"
                 maxLength="30"
+                value={this.state.email}
+                onChange={this.handleChange}
                 required
               />
               <span className="placeNameInput-error"></span>
@@ -25,14 +63,19 @@ function Register() {
                 placeholder="Пароль"
                 minLength="2"
                 maxLength="30"
+                value={this.state.password}
+                onChange={this.handleChange}
                 required
               />
               <span className="placeNameInput-error"></span>
             <button type="submit" className="auth-form__submit">Зарегистрироваться</button>
             <p className="auth-form__text">Уже зарегистрированы? <Link to="/sing-in" className="auth-form__text">Войти</Link></p>
-        </form>
+          </form>
     </section>
-  );
-}
+      )
+    }
+  }
 
-export default Register;
+
+
+export default withRouter(Register);

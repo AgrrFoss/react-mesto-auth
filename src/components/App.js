@@ -17,7 +17,7 @@ import ProtectedRoute from './ProtectedRoute';
 import InfoTooltip from './InfoTooltip';
 
 function App() {
-  const [isOpen1, setIsOpen1] = React.useState(true)
+  const [isOpenInfoTooloip, setIsOpenInfoTooloip] = React.useState(true)
   const [isOpen, setIsOpen] = React.useState(false)
   const [isOpenEditProfile, setIsOpenEditProfile] = React.useState(false);
   const [isOpenEditAva, setIsOpenEditAva] = React.useState(false);
@@ -84,6 +84,7 @@ function App() {
     setIsOpenEditProfile(false)
     setIsOpenEditAva(false)
     setIsOpenAddPlace(false)
+    setIsOpenInfoTooloip(false)
     setSelectedCard({name: '', link: ''})
   }
   function handleUpdateUser(obj) {
@@ -118,6 +119,9 @@ function App() {
       console.log(err)
     });
   }
+  function handleLogin(){
+    setLoggedIn(true)
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -126,7 +130,7 @@ function App() {
             <Header />
             <Switch>   
               <ProtectedRoute
-              path="/"
+             exact path="/"
               loggegIn={loggedIn}
               component={Main}
                 onEditProfile={handleEditProfileClick}
@@ -138,7 +142,7 @@ function App() {
                 onDeleteCard={handleCardDelete}
               />         
               <Route path='/sing-in'>
-                <Login />
+                <Login handleLogin={handleLogin}/>
               </Route>
               <Route path='/sing-up'>
                 <Register />
@@ -152,7 +156,7 @@ function App() {
             </PopupWithForm>
             <ImagePopup card={selectedCard} onClick={closeAllPopups}>
             </ImagePopup>
-            <InfoTooltip name="InfoTooltip" title="Вы успешно зарегистрировались!" isOpen={isOpen}></InfoTooltip>
+            <InfoTooltip name="InfoTooltip" title="Вы успешно зарегистрировались!" isOpen={isOpenInfoTooloip} onClick={closeAllPopups}></InfoTooltip>
           </div>
         </div>
     </CurrentUserContext.Provider>

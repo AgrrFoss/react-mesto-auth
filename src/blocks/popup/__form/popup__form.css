@@ -7,6 +7,9 @@
     border-radius: 10px;
     border: 0;
     box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 @media (max-width: 500px) {

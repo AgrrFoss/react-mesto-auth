@@ -10,18 +10,15 @@ class Register extends React.Component {
       email: '',
       password: ''
     }
-    console.log(this.state)
     this.handleChange = this.handleChange.bind(this);
-    this.kandleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(e) {
     const {name, value} = e.target;
-    console.log(name, value)
     this.setState({
       [name]: value 
     });
-    console.log(this.state)
   }
 
     handleSubmit(e) {

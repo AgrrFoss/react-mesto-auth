@@ -23,9 +23,7 @@ class Register extends React.Component {
 
     handleSubmit(e) {
       e.preventDefault()
-      console.log (this.state)
       const {email, password} = this.state;
-      console.log (email)
       mestoAuth.register(email, password)
       .then((res) => {
         if(res){

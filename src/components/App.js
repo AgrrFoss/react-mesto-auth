@@ -12,9 +12,10 @@ import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import Login from './Login';
 import Register from './Register';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import InfoTooltip from './InfoTooltip';
+import * as mestoAuth from '../mestoAuth'
 
 function App() {
   const [isOpenInfoTooloip, setIsOpenInfoTooloip] = React.useState(true)
@@ -26,7 +27,8 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false)
 
   const [currentUser, setCurrentUser] = React.useState({});
-  const [cards, setCards] = React.useState([])
+  const [cards, setCards] = React.useState([]);
+  const history = useHistory();
 
   React.useEffect(() => {
     api.getUserInfo()
@@ -43,9 +45,41 @@ function App() {
       .catch(err => {
         console.log(err)
       });
-
+  }, []);
+  
+  React.useEffect(() =>{
+    tokenCheck()
   }, []);
 
+
+  function tokenCheck() {
+
+    console.log(localStorage.getItem('token'))
+    const token = localStorage.getItem('token');
+    console.log(token);
+    if (token) {
+      mestoAuth.getContent(token)
+      .then((res) => {
+        setLoggedIn(true)
+        history.push('/')
+        console.log(res)
+      })
+    }
+    /*if (localStorage.getItem('token')){
+      const token = localStorage.getitem('token')
+      if (token){
+        mestoAuth.getContent(token)
+        .then((res) => {
+          console.log(res);
+          if(res) {
+            setLoggedIn(true)
+            history.push('/')
+          }
+        })
+      }
+      }*/
+    }
+  
   function handleCardLike (card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     api.likeCard(card._id, isLiked)
@@ -121,6 +155,7 @@ function App() {
   }
   function handleLogin(){
     setLoggedIn(true)
+    console.log(loggedIn)
   }
 
   return (

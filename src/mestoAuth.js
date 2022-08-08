@@ -9,8 +9,9 @@ export const register = (email, password) => {
         body: JSON.stringify({password: password, email: email})
     })
     .then((res) => {
+        console.log(res)
         try {
-            if (res.status === 200){
+            if (res.status === 201){
                 console.log(res)
                 return res.JSON()
             }
@@ -45,4 +46,17 @@ export const authorize = (email, password) => {
         }
     })
     .catch(err => console.log(err))       
+}
+export const getContent = (token) => {
+    return fetch(`${BASE_URL}/users/me`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization" : `Bearer ${token}`
+        }
+    })
+    .then(res => res.JSON)
+    .then((data) => {
+        console.log(data)
+    })
 }

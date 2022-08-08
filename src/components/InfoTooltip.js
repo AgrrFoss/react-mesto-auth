@@ -14,7 +14,7 @@ function InfoTooltip(props) {
       <div className="popup__container">
         <form className="popup__form" name={`${props.name}-form`} onSubmit={props.onSubmit}>
           <button className="popup__close" type="button" onClick={props.onClick}></button>
-          <img className="popup__icon" src={errorUnionPath}  alt="галочка" />
+          <img className="popup__icon" src={successUnionPath}  alt="галочка" />
           <h3 className="popup__title popup__title_center">{props.title}</h3>
         </form>
       </div>

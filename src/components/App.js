@@ -18,7 +18,7 @@ import InfoTooltip from './InfoTooltip';
 import * as mestoAuth from '../mestoAuth'
 
 function App() {
-  const [isOpenInfoTooloip, setIsOpenInfoTooloip] = React.useState(true)
+  const [isOpenInfoTooltip, setIsOpenInfoTooltip] = React.useState(false)
   const [isOpen, setIsOpen] = React.useState(false)
   const [isOpenEditProfile, setIsOpenEditProfile] = React.useState(false);
   const [isOpenEditAva, setIsOpenEditAva] = React.useState(false);
@@ -112,12 +112,15 @@ function App() {
   function handleCardClick(card) {
     setSelectedCard(card)
   }
+  function openInfoTooltip() {
+    setIsOpenInfoTooltip(true)
+  }
 
   function closeAllPopups() {
     setIsOpenEditProfile(false)
     setIsOpenEditAva(false)
     setIsOpenAddPlace(false)
-    setIsOpenInfoTooloip(false)
+    setIsOpenInfoTooltip(false)
     setSelectedCard({name: '', link: ''})
   }
   function handleUpdateUser(obj) {
@@ -179,7 +182,7 @@ function App() {
                 <Login handleLogin={handleLogin}/>
               </Route>
               <Route path='/sing-up'>
-                <Register />
+                <Register openInfoTooltip={openInfoTooltip}/>
               </Route>
             </Switch>
             <Footer />
@@ -190,7 +193,7 @@ function App() {
             </PopupWithForm>
             <ImagePopup card={selectedCard} onClick={closeAllPopups}>
             </ImagePopup>
-            <InfoTooltip name="InfoTooltip" title="Вы успешно зарегистрировались!" isOpen={isOpenInfoTooloip} onClick={closeAllPopups}></InfoTooltip>
+            <InfoTooltip name="InfoTooltip" title="Вы успешно зарегистрировались!" isOpen={isOpenInfoTooltip} onClick={closeAllPopups}></InfoTooltip>
           </div>
         </div>
     </CurrentUserContext.Provider>

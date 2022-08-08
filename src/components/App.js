@@ -51,7 +51,6 @@ function App() {
     tokenCheck()
   }, []);
 
-
   function tokenCheck() {
 
     console.log(localStorage.getItem('token'))

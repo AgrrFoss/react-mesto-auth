@@ -1,16 +1,21 @@
 import React from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, Link, useHistory } from 'react-router-dom';
 import logoPath from '../images/logo.svg';
 
-function Header() {
+function Header(props) {
+  const history = useHistory();
+  function singOut () {
+    localStorage.removeItem('token');
+    history.push('/sing-in');
+  }
   return (
     <Switch>
         <Route exact path='/'>
           <header className="header">
             <img className="header__logo" src={logoPath}  alt="логотип" />
             <div className="header__text-block">
-              <p className="header__text">email@email.ru</p>
-              <p className="header__text header__text_gray">Выйти</p>
+              <p className="header__text">{props.email}</p>
+              <button className="header__button" onClick={singOut}>Выйти</button>
 
             </div>
           </header>        

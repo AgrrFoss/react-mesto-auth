@@ -19,12 +19,14 @@ import * as mestoAuth from '../mestoAuth'
 
 function App() {
   const [isOpenInfoTooltip, setIsOpenInfoTooltip] = React.useState(false)
+  const [typeInfoTooltipError, setTypeInfoTooltip] = React.useState(false)
   const [isOpen, setIsOpen] = React.useState(false)
   const [isOpenEditProfile, setIsOpenEditProfile] = React.useState(false);
   const [isOpenEditAva, setIsOpenEditAva] = React.useState(false);
   const [isOpenAddPlace, setIsOpenAddPlace] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({name: '', link: ''});
   const [loggedIn, setLoggedIn] = React.useState(false)
+  const [userEmail, setUserEmail] = React.useState('')
 
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
@@ -52,31 +54,18 @@ function App() {
   }, []);
 
   function tokenCheck() {
-
-    console.log(localStorage.getItem('token'))
     const token = localStorage.getItem('token');
-    console.log(token);
     if (token) {
       mestoAuth.getContent(token)
       .then((res) => {
-        setLoggedIn(true)
-        history.push('/')
-        console.log(res)
+        if(res) {
+          setLoggedIn(true);
+          history.push('/');
+          setUserEmail(res.data.email);
+        }
+        
       })
     }
-    /*if (localStorage.getItem('token')){
-      const token = localStorage.getitem('token')
-      if (token){
-        mestoAuth.getContent(token)
-        .then((res) => {
-          console.log(res);
-          if(res) {
-            setLoggedIn(true)
-            history.push('/')
-          }
-        })
-      }
-      }*/
     }
   
   function handleCardLike (card) {
@@ -113,6 +102,12 @@ function App() {
     setSelectedCard(card)
   }
   function openInfoTooltip() {
+    setTypeInfoTooltip(false)
+    setIsOpenInfoTooltip(true)
+  }
+
+  function openErrorInfoTooltip() {
+    setTypeInfoTooltip(true)
     setIsOpenInfoTooltip(true)
   }
 
@@ -164,11 +159,11 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
         <div className="App">
           <div className="page">
-            <Header />
+            <Header email={userEmail}/>
             <Switch>   
               <ProtectedRoute
              exact path="/"
-              loggegIn={loggedIn}
+             loggedIn={loggedIn}
               component={Main}
                 onEditProfile={handleEditProfileClick}
                 onAddPlace={handleAddPlaceClick}
@@ -179,7 +174,7 @@ function App() {
                 onDeleteCard={handleCardDelete}
               />         
               <Route path='/sing-in'>
-                <Login handleLogin={handleLogin}/>
+                <Login handleLogin={handleLogin} openInfoTooltip={openErrorInfoTooltip}/>
               </Route>
               <Route path='/sing-up'>
                 <Register openInfoTooltip={openInfoTooltip}/>
@@ -193,7 +188,7 @@ function App() {
             </PopupWithForm>
             <ImagePopup card={selectedCard} onClick={closeAllPopups}>
             </ImagePopup>
-            <InfoTooltip name="InfoTooltip" title="Вы успешно зарегистрировались!" isOpen={isOpenInfoTooltip} onClick={closeAllPopups}></InfoTooltip>
+            <InfoTooltip name="InfoTooltip" typeError={typeInfoTooltipError} isOpen={isOpenInfoTooltip} onClick={closeAllPopups}></InfoTooltip>
           </div>
         </div>
     </CurrentUserContext.Provider>

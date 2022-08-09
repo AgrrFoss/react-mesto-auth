@@ -28,7 +28,6 @@ class Login extends React.Component {
       }
       mestoAuth.authorize(this.state.email, this.state.password)
       .then((data) => {
-        console.log(data)
         if (data.token){
           this.setState({email: '', password: ''}, () => {
             this.props.handleLogin(); //вызывем из пропсов фунцию меняющую loggedIn на True
@@ -36,7 +35,8 @@ class Login extends React.Component {
           }
       )}
       })
-      .catch(err => console.log(err))
+      .catch((err) => {console.log(err)
+      this.props.openInfoTooltip()})
     }
 
     render () {

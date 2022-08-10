@@ -6,26 +6,26 @@ export const register = (email, password) => {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({password: password, email: email})
+        body: JSON.stringify({ password: password, email: email })
     })
-    .then((res) => {
-        console.log(res)
-        try {
-            if (res.status === 201){
-                console.log(res)
-                return res.JSON()
+        .then((res) => {
+            console.log(res)
+            try {
+                if (res.status === 201) {
+                    console.log(res)
+                    return res.JSON()
+                }
+            } catch (e) {
+                console.log(e);
+                return (e)
             }
-        } catch (e) {
-            console.log(e);
-            return(e)
-        }
-    })
-    .then ((res) => {
-        return res;
-    })
-    .catch ((err) =>{
-        console.log(err);
-    })
+        })
+        .then((res) => {
+            return res;
+        })
+        .catch((err) => {
+            console.log(err);
+        })
 }
 export const authorize = (email, password) => {
     return fetch(`${BASE_URL}/signin`, {
@@ -38,25 +38,25 @@ export const authorize = (email, password) => {
             email: email
         })
     })
-    .then((response => response.json()))
-    .then((data) => {
-        if (data.token){
-            localStorage.setItem('token', data.token);
-            return data;
-        }
-    })
-    .catch(err => console.log(err))       
+        .then((response => response.json()))
+        .then((data) => {
+            if (data.token) {
+                localStorage.setItem('token', data.token);
+                return data;
+            }
+        })
+        .catch(err => console.log(err))
 }
 export const getContent = (token) => {
     return fetch(`${BASE_URL}/users/me`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json",
-            "Authorization" : `Bearer ${token}`
+            "Authorization": `Bearer ${token}`
         }
     })
-    .then(res => res.json())
-    .then((data) => {
-        return data;
-    })
+        .then(res => res.json())
+        .then((data) => {
+            return data;
+        })
 }

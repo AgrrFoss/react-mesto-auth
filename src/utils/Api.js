@@ -41,8 +41,8 @@ class Api {
         .then(this._checkResponse)
     }
 
-    postCard(cardsUrl, cardObj) {
-        return fetch(`${this._url}${cardsUrl}`, {
+    postCard( cardObj) {
+        return fetch(`${this._url}/cards`, {
             method: 'POST',
             headers: this._headers,
             body: JSON.stringify(cardObj)

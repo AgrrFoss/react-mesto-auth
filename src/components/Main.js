@@ -3,7 +3,7 @@ import api from '../utils/Api';
 import Card from '../components/Card';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onLikeCard, onDeleteCard}) {
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onLikeCard, onDeleteCard }) {
 
   const userInfo = React.useContext(CurrentUserContext)
 

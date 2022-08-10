@@ -33,7 +33,8 @@ function App() {
   const history = useHistory();
 
   React.useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getCard(), checkToken()])
+    if (loggedIn) {
+    Promise.all([api.getUserInfo(), api.getCard()])
       .then((res) => {
         const [userInfo, cards] = res
         setCurrentUser(userInfo);
@@ -42,7 +43,8 @@ function App() {
       .catch(err => {
         console.log(err)
       });
-  }, []);
+    }
+  }, [loggedIn]);
 
   React.useEffect(() => {
     checkToken()

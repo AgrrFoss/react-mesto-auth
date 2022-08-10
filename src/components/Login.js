@@ -26,6 +26,8 @@ class Login extends React.Component {
     if (!this.state.email || !this.state.password) {
       return;
     }
+    this.props.handleLogin(this.state.email, this.state.password)
+/*
     mestoAuth.authorize(this.state.email, this.state.password)
       .then((data) => {
         if (data.token) {
@@ -40,6 +42,7 @@ class Login extends React.Component {
         console.log(err)
         this.props.openInfoTooltip()
       })
+      */
   }
 
   render() {

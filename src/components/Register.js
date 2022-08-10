@@ -24,13 +24,7 @@ class Register extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
     const { email, password } = this.state;
-    mestoAuth.register(email, password)
-      .then((res) => {
-        if (res) {
-          this.props.history.push('/sing-in');
-          this.props.openInfoTooltip()
-        }
-      })
+    this.props.handleRegister(email, password);
   }
 
   render() {

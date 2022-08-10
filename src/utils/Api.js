@@ -23,8 +23,17 @@ class Api {
         .then(this._checkResponse)
     }
 
-    postUserInfo(userUrl, userObj) {
-        return fetch(`${this._url}${userUrl}`, {
+    postUserInfo(userObj) {
+        return fetch(`${this._url}/users/me`, {
+            method: 'PATCH',
+            headers: this._headers,
+            body: JSON.stringify(userObj)
+        })
+        .then(this._checkResponse)
+        
+    }
+    postUserAvatar(userObj) {
+        return fetch(`${this._url}/users/me/avatar`, {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify(userObj)

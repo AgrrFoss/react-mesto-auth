@@ -31,24 +31,7 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
   const history = useHistory();
-  /*
-    React.useEffect(() => {
-      api.getUserInfo()
-        .then((res) => {
-          setCurrentUser(res);
-          api.getCard()
-            .then((res) => {
-              setCards(res);
-            })
-            .catch(err => {
-              console.log(err)
-            });
-        })
-        .catch(err => {
-          console.log(err)
-        });
-    }, []);
-  */
+
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getCard()])
       .then((res) => {
@@ -75,7 +58,8 @@ function App() {
             history.push('/');
             setUserEmail(res.data.email);
           } else {
-            localStorage.removeItem('token');
+            localStorage.removeItem('token')
+            setLoggedIn(false);
             history.push('/sing-in');
           }
         })
@@ -92,7 +76,6 @@ function App() {
         console.log(err)
       });
   }
-
   function handleCardDelete(card) {
     api.deleteCard(card._id)
       .then((res) => {
@@ -119,12 +102,10 @@ function App() {
     setTypeInfoTooltip(false)
     setIsOpenInfoTooltip(true)
   }
-
   function openErrorInfoTooltip() {
     setTypeInfoTooltip(true)
     setIsOpenInfoTooltip(true)
   }
-
   function closeAllPopups() {
     setIsOpenEditProfile(false)
     setIsOpenEditAva(false)
@@ -132,8 +113,9 @@ function App() {
     setIsOpenInfoTooltip(false)
     setSelectedCard({ name: '', link: '' })
   }
+
   function handleUpdateUser(obj) {
-    api.postUserInfo('/users/me', obj)
+    api.postUserInfo(obj)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
@@ -142,9 +124,8 @@ function App() {
         console.log(err)
       });
   }
-
   function handleUpdateAvatar(obj) {
-    api.postUserInfo('/users/me/avatar', obj)
+    api.postUserAvatar(obj)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
@@ -164,16 +145,50 @@ function App() {
         console.log(err)
       });
   }
-  function handleLogin() {
-    setLoggedIn(true)
-    console.log(loggedIn)
+
+  function handleSingOut() {
+    localStorage.removeItem('token');
+    history.push('/sing-in');
   }
+  function handleLogin(email, password) {
+    mestoAuth.authorize(email, password)
+      .then((data) => {
+        if (data.token) {
+          setLoggedIn(true)
+          history.push('/')
+        } else {
+          openErrorInfoTooltip()
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        openErrorInfoTooltip()
+      })
+  }
+  function handleRegister(email, password) {
+    mestoAuth.register(email, password)
+      .then((res) => {
+        if (res) {
+          openInfoTooltip();
+          history.push('/sing-in');
+        } else {
+          openErrorInfoTooltip()
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        openErrorInfoTooltip()
+      })
+  }
+
+
+
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
         <div className="page">
-          <Header email={userEmail} />
+          <Header email={userEmail} singOut={handleSingOut} />
           <Switch>
             <ProtectedRoute
               exact path="/"
@@ -188,10 +203,11 @@ function App() {
               onDeleteCard={handleCardDelete}
             />
             <Route path='/sing-in'>
-              <Login handleLogin={handleLogin} openInfoTooltip={openErrorInfoTooltip} />
+              <Login handleLogin={handleLogin}
+              />
             </Route>
             <Route path='/sing-up'>
-              <Register openInfoTooltip={openInfoTooltip} />
+              <Register handleRegister={handleRegister} />
             </Route>
           </Switch>
           <Footer />
@@ -211,7 +227,7 @@ function App() {
             name="delete-place"
             title="Вы уверены?"
             buttonText="Да"
-            isOpen={isOpenDeleteConfirmPopup}/>
+            isOpen={isOpenDeleteConfirmPopup} />
           <ImagePopup card={selectedCard} onClick={closeAllPopups} />
           <InfoTooltip
             name="InfoTooltip"

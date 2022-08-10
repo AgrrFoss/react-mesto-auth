@@ -33,7 +33,7 @@ function App() {
   const history = useHistory();
 
   React.useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getCard()])
+    Promise.all([api.getUserInfo(), api.getCard(), checkToken()])
       .then((res) => {
         const [userInfo, cards] = res
         setCurrentUser(userInfo);

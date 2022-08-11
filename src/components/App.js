@@ -34,15 +34,15 @@ function App() {
 
   React.useEffect(() => {
     if (loggedIn) {
-    Promise.all([api.getUserInfo(), api.getCard()])
-      .then((res) => {
-        const [userInfo, cards] = res
-        setCurrentUser(userInfo);
-        setCards(cards);
-      })
-      .catch(err => {
-        console.log(err)
-      });
+      Promise.all([api.getUserInfo(), api.getCard()])
+        .then((res) => {
+          const [userInfo, cards] = res
+          setCurrentUser(userInfo);
+          setCards(cards);
+        })
+        .catch(err => {
+          console.log(err)
+        });
     }
   }, [loggedIn]);
 
@@ -60,10 +60,13 @@ function App() {
             history.push('/');
             setUserEmail(res.data.email);
           } else {
-            localStorage.removeItem('token')
+            localStorage.removeItem('token');
             setLoggedIn(false);
             history.push('/sing-in');
           }
+        })
+        .catch((err) => {
+          console.log(err);
         })
     }
   }
